@@ -1,0 +1,28 @@
+TITLE:: SinOp
+summary:: Feedback PM oscillator
+categories:: UGens>Generators>Deterministic
+
+DESCRIPTION::
+SinOp is a sine oscillator that has phase modulation feedback. Positive feedback creates a sawtooth like wave, negative feedback a square like wave. Overmodulation creates chaotic oscillation.
+
+CLASSMETHODS::
+
+METHOD:: ar
+
+ARGUMENT:: freq
+The base frequency of the oscillator in Hertz. This can be audio, or control, rate.
+
+ARGUMENT:: phase
+The phase of the oscillator in radians. This can be audio, or control, rate.
+
+ARGUMENT:: feedback
+Phase feedback multiplier. Negative values create a square wave, positive values a saw tooth. Large values create noise. This can only be control rate.
+
+INSTANCEMETHODS::
+
+
+EXAMPLES::
+
+code::
+(some example code)
+::
