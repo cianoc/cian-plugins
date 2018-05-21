@@ -18,13 +18,6 @@ public:
         ,  lomask ((ft->mSineSize - 1) << 3)
     {
         // get initial phase of oscillator
-     //   mPhase = in(1);
-
-        printf("initialized\n");
-        // int tableSize2 = ft->mSineSize;
-        // lomask = (tableSize2 - 1) << 3;  // 65528 or 1111111111111000 
-        //radtoinc = tableSize2 * (rtwopi * 65536.);
-        //cpstoinc = tableSize2 * sampleDur() * 65536.;
 
         // 1. set the calculation function.
         if (isAudioRateIn(0)) { // if the frequency argument is audio rate
@@ -36,7 +29,6 @@ public:
             if(isAudioRateIn(1)) // if the phase argument is audio rate
                 set_calc_function<SinOp,&SinOp::next_ka>();
             else{
-                printf("next_kk\n");
                 set_calc_function<SinOp,&SinOp::next_kk>();                
             }
         }
@@ -303,7 +295,7 @@ private:
 };
 
 // the entry point is called by the host when the plug-in is loaded
-PluginLoad(SinOpUGens)
+PluginLoad(CianOpUGens)
 {
     // InterfaceTable *inTable implicitly given as argument to the load function
     ft = inTable; // store pointer to InterfaceTable
@@ -311,5 +303,5 @@ PluginLoad(SinOpUGens)
     // registerUnit takes the place of the Define*Unit functions. It automatically checks for the presence of a
     // destructor function.
     // However, it does not seem to be possible to disable buffer aliasing with the C++ header.
-    registerUnit<SinOp>(ft, "SinOp");
+    registerUnit<SinOp>(ft, "CianOpUGens");
 }
