@@ -38,7 +38,6 @@ public:
 
         p_freq = in0(0);
         p_phasein = in0(1);
-        p_feedback = in0(2);
 
         // calculate one sample of output.
         next_kk(1);
@@ -51,7 +50,6 @@ private:
 
     float p_freq;
     float p_phasein;
-    float p_feedback;
 
     const int32 lomask;
     const double radtoinc;
@@ -78,11 +76,6 @@ private:
         int32 l_phase = phase;
         float l_prevout = prevout;
 
-        float feedback_slope=0.0;
-
-        if (feedback != p_feedback)
-            feedback_slope = calcSlope(feedback, p_feedback);
-
         float fb;
         for (int i=0; i < inNumSamples; ++i)
         {
@@ -92,9 +85,6 @@ private:
                 fb = l_prevout * l_prevout * feedback;
             else 
                 fb = 0.0;
-
-
-            feedback += feedback_slope;
   
             l_phase += (int32)(freq_in[i]*cpstoinc);           
 
@@ -107,8 +97,6 @@ private:
 
         prevout = l_prevout;
         phase = l_phase;
-
-        p_feedback = feedback;
 
     }
 
@@ -129,14 +117,10 @@ private:
 
         float l_phase_in = p_phasein * radtoinc;
 
-        float feedback_slope=0.0;
         float phase_slope=0.0;
 
         if (phase_in != p_phasein)
             phase_slope = calcSlope(phase_in, p_phasein) * radtoinc;
-
-        if (feedback != p_feedback)
-            feedback_slope = calcSlope(feedback, p_feedback);
 
         float fb;
         for (int i=0; i < inNumSamples; ++i)
@@ -147,9 +131,6 @@ private:
                 fb = l_prevout * l_prevout * feedback;
             else 
                 fb = 0.0;
-
-
-            feedback += feedback_slope;
   
             l_phase += (int32)(freq_in[i]*cpstoinc);           
 
@@ -164,7 +145,6 @@ private:
         prevout = l_prevout;
         phase = l_phase;
 
-        p_feedback = feedback;
         p_phasein = phase_in;
 
     }
@@ -193,9 +173,6 @@ private:
         if (freq_in != l_freq)
             freq_slope = calcSlope(freq_in, p_freq) * cpstoinc;
 
-        if (feedback != p_feedback)
-            feedback_slope = calcSlope(feedback, p_feedback);
-
         float fb;
         for (int i=0; i < inNumSamples; ++i)
         {
@@ -206,9 +183,7 @@ private:
             else 
                 fb = 0.0;
 
-
-            feedback += feedback_slope;
-  
+ 
             l_phase += (int32)(l_freq);           
             l_freq += freq_slope;
 
@@ -223,7 +198,6 @@ private:
         phase = l_phase;
 
         p_freq = freq_in;
-        p_feedback = feedback;
 
 
     }
@@ -246,7 +220,6 @@ private:
         float l_phase_in = p_phasein * radtoinc;
         float l_freq = p_freq * cpstoinc;
 
-        float feedback_slope=0.0;
         float phase_slope=0.0;
         float freq_slope=0.0;
 
@@ -255,9 +228,6 @@ private:
 
         if (phase_in != p_phasein)
             phase_slope = calcSlope(phase_in, p_phasein) * radtoinc;
-
-        if (feedback != p_feedback)
-            feedback_slope = calcSlope(feedback, p_feedback);
 
         float fb;
         for (int i=0; i < inNumSamples; ++i)
@@ -269,9 +239,7 @@ private:
             else 
                 fb = 0.0;
 
-
-            feedback += feedback_slope;
-  
+ 
             l_phase += (int32)(l_freq);           
             l_freq += freq_slope;
 
@@ -287,7 +255,6 @@ private:
         phase = l_phase;
 
         p_freq = freq_in;
-        p_feedback = feedback;
         p_phasein = phase_in;
 
     }
@@ -303,5 +270,5 @@ PluginLoad(CianOpUGens)
     // registerUnit takes the place of the Define*Unit functions. It automatically checks for the presence of a
     // destructor function.
     // However, it does not seem to be possible to disable buffer aliasing with the C++ header.
-    registerUnit<SinOp>(ft, "CianOpUGens");
+    registerUnit<SinOp>(ft, "SinOp");
 }
